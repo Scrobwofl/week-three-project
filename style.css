@@ -10,33 +10,53 @@
 }
 
 body {
-  height: 100vh;
-  width: 100vw;
-  max-width: 100%;
   display: grid;
-  grid-template-columns: auto auto auto;
-  grid-template-rows: auto auto 50% auto auto;
+  grid-template-columns: 1fr 1000px 1fr;
+  grid-template-rows: 9rem 500px 150px auto 50px;
   grid-template-areas:
     " header header header "
-    " . search . "
     " . main . "
-    " . results . "
-    "footer footer footer";
-  background-image: url("./images/cats-05.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-size: auto auto;
-  justify-content: space-around;
+    " . search . "
+    " results results results "
+    " footer footer footer ";
+  justify-content: space-between;
   justify-items: stretch;
   align-items: stretch;
   overflow: hidden;
-  gap: 1rem;
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+}
+
+#bg-container {
+  background-image: url("./images/cats-05.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-size: 100% auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  filter: blur(15px);
+  z-index: -1;
+  transform: scale(103%);
+  overflow: hidden;
+}
+
+header,
+section,
+footer,
+form {
+  z-index: 2;
+  overflow: hidden;
 }
 
 header {
   grid-area: header;
-  background-color: darkslategray;
+  background-color: black;
   color: whitesmoke;
 }
 header > h1 {
@@ -45,43 +65,43 @@ header > h1 {
   margin: 1rem;
 }
 
-#section {
-  display: grid;
-}
-
 #main-image-container {
   position: relative;
+  justify-content: space-around;
+  align-items: stretch;
   grid-area: main;
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 #main-image-container > img {
-  box-shadow: 0 0.5em 2em 0.1em black;
+  box-shadow: 0px 10px 22px -7px rgba(0, 0, 0, 0.75);
   border-radius: 1em;
-  max-width: 40vw;
-  max-height: 40vh;
+  max-width: 100%;
+  max-height: 100%;
   height: auto;
   width: auto;
-  object-fit: contain;
+  object-fit: cover;
+  margin-top: 10px;
 }
 
 #search {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
   grid-area: search;
   padding: 1rem;
   border-radius: 3rem;
-  justify-content: center;
-  align-content: center;
-  display: flex;
 }
 
 form {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 1em;
-  background-color: darkslategrey;
+  background-color: black;
+  box-shadow: 0px 5px 7px -4px rgba(0, 0, 0, 0.75);
   padding: 1em;
   border-radius: 2em;
 }
@@ -104,22 +124,12 @@ form {
   grid-area: results;
 }
 
-button {
-  margin: 2rem;
-  padding: 1rem 1.3rem;
-  border-radius: 4rem;
-  border: none;
-  font-size: 2rem;
-  background-color: black;
-  color: white;
-}
-
 #results-container {
   grid-area: results;
   background-color: darkslategray;
   height: 100%;
   width: 100%;
-  display: flex;
+  display: none;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
@@ -128,14 +138,13 @@ button {
 
 #gallery-container {
   /* display: relative; */
-  max-width: 60%;
+  max-width: 100%;
   /* display: none; */
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
   height: auto;
   border-radius: 2em;
-  overflow: auto;
   /* --mask: linear-gradient(
       to right,
       rgba(0, 0, 0, 0) 0,
@@ -149,25 +158,56 @@ button {
 }
 
 #thumb-container {
+  box-shadow: 0px 5px 7px -4px rgba(0, 0, 0, 0.75);
+  background-color: black;
+  border-radius: 1rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: auto;
+  height: 9rem;
   padding: 1em;
   scroll-behavior: smooth;
-  overflow-x: scroll;
 }
 #thumb-container > img {
-  height: 10rem;
+  height: auto;
   width: auto;
 }
 
 .thumb-result {
-  width: 200px;
+  width: 100%;
   max-height: 100%;
   margin: 0.4em;
+}
+
+#nav-right,
+#nav-left {
+  margin: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  border-radius: 10%;
+  border: none;
+  background-color: black;
+  z-index: 10;
+}
+#nav-right span,
+#nav-left span {
+  margin: -4.7rem 0 0 0;
+  font-size: 5rem;
+  height: 1rem;
+  width: 3rem;
+  color: white;
+}
+
+#nav-right {
+  visibility: visible;
+}
+
+#nav-left {
+  visibility: hidden;
 }
 
 footer {
@@ -179,4 +219,67 @@ footer {
   height: auto;
   color: whitesmoke;
   background-color: black;
+}
+
+/* I know i've done my design is the wrong way round and it should be mobile-first, but i've spent too long to think about reversing everything. */
+@media screen and (max-width: 600px) {
+  * {
+    font-size: 12px;
+  }
+  body {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 5rem 500px 150px auto 30px;
+    grid-template-areas:
+      "header"
+      "main"
+      "search"
+      "results"
+      "footer";
+    justify-content: space-between;
+    justify-items: stretch;
+    align-items: stretch;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    max-width: 100%;
+  }
+
+  header > h1 {
+    margin: 0.8em;
+    padding: 0;
+    font-size: 1.8em;
+  }
+
+  form {
+    gap: 0;
+    flex-direction: column;
+    height: auto;
+  }
+
+  #thumb-container {
+    overflow: scroll;
+  }
+
+  #nav-left,
+  #nav-right {
+    position: absolute;
+    bottom: 4rem;
+    margin: 0;
+    padding: 2em 2em;
+  }
+
+  #nav-left,
+  #nav-right > button {
+    font-size: 1em;
+  }
+
+  #nav-left {
+    border-radius: 0 2em 2em 0;
+    left: 0;
+  }
+  #nav-right {
+    border-radius: 2em 0 0 2em;
+    right: 0;
+  }
 }

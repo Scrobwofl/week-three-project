@@ -8,6 +8,7 @@
     <script src="app.js" defer></script>
   </head>
   <body>
+    <div id="bg-container"></div>
     <header>
       <h1>Image Search</h1>
     </header>
@@ -18,14 +19,16 @@
       </form>
     </section>
     <section id="main-image-container">
-      <img src="./images/cats-02.jpg" alt="" srcset="" />
+      <img srcset=" ./images/default-cat-small.jpg 500w,
+      ./images/default-cat-large.jpg 1000w, alt="The default background image of
+      a tabby cat that is looking at you with a neutral face." />
     </section>
     <section id="results-container">
-      <button id="nav-left">&#60;</button>
+      <button id="nav-left"><span>&#60;</span></button>
       <div id="gallery-container">
-        <div id="thumb-container">&#62;</div>
+        <div id="thumb-container"></div>
       </div>
-      <button id="nav-right">></button>
+      <button id="nav-right"><span>&#62;</span></button>
     </section>
     <footer>Howe Creative &copy 2024</footer>
   </body>

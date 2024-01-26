@@ -13,140 +13,122 @@ const navRight = document.getElementById("nav-right");
 // Variable declarations
 let images = [];
 let currentPage = 1;
-let currentQuery = "";
+let totalPages;
 
-// // Test Object
-// let customArrayOfObjs = [
-//   {
-//     url: "./images/cats-00.jpg",
-//     alt: "Cat images number zero",
-//   },
-//   {
-//     url: `./images/cats-01.jpg`,
-//     alt: `Cat images number one`,
-//   },
-//   {
-//     url: `./images/cats-02.jpg`,
-//     alt: `Cat images number two`,
-//   },
-//   {
-//     url: `./images/cats-03.jpg`,
-//     alt: `Cat images number three`,
-//   },
-//   {
-//     url: `./images/cats-04.jpg`,
-//     alt: `Cat images number four`,
-//   },
-//   {
-//     url: `./images/cats-05.jpg`,
-//     alt: `Cat images number five`,
-//   },
-//   {
-//     url: `./images/cats-06.jpg`,
-//     alt: `Cat images number six`,
-//   },
-//   {
-//     url: `./images/cats-07.jpg`,
-//     alt: `Cat images number seven`,
-//   },
-//   {
-//     url: `./images/cats-03.jpg`,
-//     alt: `Cat images number seven`,
-//   },
-//   {
-//     url: `./images/cats-02.jpg`,
-//     alt: `Cat images number seven`,
-//   },
-// ];
+const defaultQuery = "Cats";
+let currentQuery = "";
 
 // Form event listener, getting input and passing to handler
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   let query = input.value;
-  console.log(query);
   search(query, currentPage);
 });
 
 // Search/API Handler
 async function search(queryParam, page) {
-  currentQuery = queryParam;
-  let response = await fetch(
-    `https://api.unsplash.com/search/photos?page=${page}&query=${queryParam}&client_id=${USER_KEY}`
-  );
-  const data = await response.json();
-  console.log("Downloaded", data);
-  createThumbnails(data.results);
+  try {
+    // const USER_KEY = process.env.USER_KEY;
+
+    currentQuery = queryParam;
+    // currentPage = page;
+    let response = await fetch(
+      `https://api.unsplash.com/search/photos?page=${page}&query=${queryParam}&client_id=${USER_KEY}`
+    );
+    const data = await response.json();
+    totalPages = data.total_pages;
+    console.log("Downloaded", data);
+    createThumbnails(data.results);
+  } catch (error) {
+    console.log(`${error}`);
+    alert(
+      `You have received an error, please refresh the page. The error is: ${error}`
+    );
+  }
 }
 
-// Populate the main image container
-function populateBgImage(imgObj) {
-  let bgImage = imgObj.urls.full;
-  // let bgImage = imgObj.url
-  body.setAttribute(`style`, `background-image: url(${bgImage})`);
-
-  galleryContainer.setAttribute(`style`, `display: flex`);
-}
-
-// Generic function to make
-function createDisplayImg(imgObj) {
-  console.log("clicked");
-  mainImageContainer.innerHTML = "";
-  let img = document.createElement("img");
-  img.src = imgObj.urls.thumb;
-  img.alt = imgObj.alt_description;
-  mainImageContainer.appendChild(img);
-}
-
-// Create thumbnails row after being passed an object
 const createThumbnails = (arrayOfObjImages) => {
-  // thumbContainer.innerHtml = "";
-  // console.table(arrayOfImages);
+  if ((resultsContainer.style.display = "none")) {
+    resultsContainer.style.display = "flex";
+  }
+
+  thumbContainer.innerHTML = ``;
+
   arrayOfObjImages.forEach((imgObj, index) => {
     let img = document.createElement("img");
-    // img.src = imgObj.url;
-    // img.alt = imgObj.alt;
     img.src = imgObj.urls.thumb;
     img.alt = imgObj.alt_description;
     img.classList.add("thumb-result");
+    // img.setAttribute("style", `width: ${imgObj.length}`);
     // img.style.width = `${100 / imgObj.length()}%`;
     img.addEventListener("click", () => {
-      createDisplayImg(imgObj);
+      populateMainImage(imgObj);
+      populateBgImage(imgObj);
     });
     thumbContainer.appendChild(img);
     if (index === 0) {
       populateBgImage(imgObj);
-      createDisplayImg(imgObj);
+      populateMainImage(imgObj);
     }
   });
-  // thumbContainer.appendChild(img);
 };
 
-if ((currentPage = 1)) {
-  navLeft.setAttribute("style", "visibility: hidden");
+// Populate the main image container
+function populateBgImage(imgObj) {
+  const bgContainer = document.getElementById("bg-container");
+  let bgImage = imgObj.urls.thumb;
+  bgContainer.setAttribute(`style`, `background-image: url(${bgImage})`);
+  galleryContainer.setAttribute(`style`, `display: flex`);
 }
 
-// if ((currentPage = (data.total_pages -1)) {
-//   navRight.setAttribute("style", "visibility: hidden");
-// }
+// Generic function to make image containers
+function populateMainImage(imgObj) {
+  mainImageContainer.innerHTML = "";
+  let img = document.createElement("img");
+  img.src = imgObj.urls.full;
+  img.alt = imgObj.alt_description;
+  mainImageContainer.appendChild(img);
+}
 
+// Navigation Buttons
 navLeft.addEventListener("click", () => {
-  console.log("clicked");
-  currentPage--;
-  search();
+  if (currentPage > 1) {
+    currentPage--;
+    search(currentQuery, currentPage);
+  }
+  updateNavigationVisibility();
 });
 
 navRight.addEventListener("click", () => {
-  console.log("clicked");
-  currentPage++;
-  search(query, currentPage);
+  if (currentPage < totalPages) {
+    currentPage++;
+    search(currentQuery, currentPage);
+  }
+  updateNavigationVisibility();
 });
 
-createThumbnails(images);
-// function centerImage() {}
+// This bit i got chatgpts help with as I was getting completely lost. I had the event listener part, but separating out the concern of the navigation visibility didn't occur to me, I was trying to do it all in the event listener and was getting loops due to recalling the search function.
+// function updateNavigationVisibility() {
+//   navLeft.style.visibility = currentPage <= 1 ? "hidden" : "visible";
+//   navRight.style.visibility = currentPage >= totalPages ? "hidden" : "visible";
+// }
+
+// Rewrote the above part in a syntax i can read more easily. Haven't really got ternery operators memorised yet.
+function updateNavigationVisibility() {
+  if (currentPage < 1) {
+    navLeft.style.visibility = "hidden";
+  } else {
+    navLeft.style.visibility = "visible";
+  }
+
+  if (currentPage > totalPages) {
+    navRight.style.visibility = "hidden";
+  } else {
+    navRight.style.visibility = "visible";
+  }
+}
 
 // To Do:
-// Secondary images navigation
 // Work out env variable
-// Upgrade to an api object
 // Keyboard interaction
 // Add aria functionality
