@@ -12,12 +12,19 @@
       <h1>Image Search</h1>
     </header>
     <section id="search">
-      <form action="submit"></form>
-      <button action="submit">Search</button>
+      <form id="form">
+        <input type="text" id="input" name="search" /><br /><br />
+        <input id="submit" type="submit" value="Submit" />
+      </form>
     </section>
-    <section id="gallery-container">
-      <button id="nav-left"><</button>
-      <div id="image-list-container"></div>
+    <section id="main-image-container">
+      <img src="./images/cats-02.jpg" alt="" srcset="" />
+    </section>
+    <section id="results-container">
+      <button id="nav-left">&#60;</button>
+      <div id="gallery-container">
+        <div id="thumb-container">&#62;</div>
+      </div>
       <button id="nav-right">></button>
     </section>
     <footer>Howe Creative &copy 2024</footer>

@@ -1,27 +1,182 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   text-align: center;
   box-sizing: border-box;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
 }
 
+body {
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto 50% auto auto;
+  grid-template-areas:
+    " header header header "
+    " . search . "
+    " . main . "
+    " . results . "
+    "footer footer footer";
+  background-image: url("./images/cats-05.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-size: auto auto;
+  justify-content: space-around;
+  justify-items: stretch;
+  align-items: stretch;
+  overflow: hidden;
+  gap: 1rem;
+}
+
+header {
+  grid-area: header;
+  background-color: darkslategray;
+  color: whitesmoke;
+}
 header > h1 {
-  margin: 1em;
+  font-size: 3rem;
+  padding: 2rem;
+  margin: 1rem;
 }
 
-button {
-  margin: 1em;
-  border-radius: 4em;
+#section {
+  display: grid;
+}
+
+#main-image-container {
+  position: relative;
+  grid-area: main;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#main-image-container > img {
+  box-shadow: 0 0.5em 2em 0.1em black;
+  border-radius: 1em;
+  max-width: 40vw;
+  max-height: 40vh;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+}
+
+#search {
+  grid-area: search;
+  padding: 1rem;
+  border-radius: 3rem;
+  justify-content: center;
+  align-content: center;
+  display: flex;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1em;
+  background-color: darkslategrey;
+  padding: 1em;
+  border-radius: 2em;
+}
+
+#input {
+  padding: 0.6rem 1rem;
+  font-size: 2em;
+  border-radius: 0.5em;
+}
+
+#submit {
+  padding: 1rem 3rem;
+  font-size: 1.6em;
+  border-radius: 2rem;
   border: none;
   background-color: silver;
 }
 
-#search > button {
-  padding: 0.6em 2em;
+#results {
+  grid-area: results;
 }
 
-#gallery-container > button {
-  padding: 1.6em 2em;
+button {
+  margin: 2rem;
+  padding: 1rem 1.3rem;
+  border-radius: 4rem;
+  border: none;
+  font-size: 2rem;
+  background-color: black;
+  color: white;
+}
+
+#results-container {
+  grid-area: results;
+  background-color: darkslategray;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+#gallery-container {
+  /* display: relative; */
+  max-width: 60%;
+  /* display: none; */
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  height: auto;
+  border-radius: 2em;
+  overflow: auto;
+  /* --mask: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0) 0,
+      rgba(0, 0, 0, 1) 10%,
+      rgba(0, 0, 0, 1) 90%,
+      rgba(0, 0, 0, 0) 100%
+    )
+    100% 50% / 100% 100% repeat-x;
+  -webkit-mask: var(--mask);
+  mask: var(--mask); */
+}
+
+#thumb-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  padding: 1em;
+  scroll-behavior: smooth;
+  overflow-x: scroll;
+}
+#thumb-container > img {
+  height: 10rem;
+  width: auto;
+}
+
+.thumb-result {
+  width: 200px;
+  max-height: 100%;
+  margin: 0.4em;
+}
+
+footer {
+  grid-area: footer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  height: auto;
+  color: whitesmoke;
+  background-color: black;
 }
