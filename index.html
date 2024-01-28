@@ -10,25 +10,56 @@
   <body>
     <div id="bg-container"></div>
     <header>
-      <h1>Image Search</h1>
+      <h1 role="heading">Image Search</h1>
     </header>
     <section id="search">
       <form id="form">
-        <input type="text" id="input" name="search" /><br /><br />
+        <input
+          type="text"
+          id="search-input"
+          name="search"
+          role="search-box"
+        /><br /><br />
         <input id="submit" type="submit" value="Submit" />
       </form>
     </section>
-    <section id="main-image-container">
-      <img srcset=" ./images/default-cat-small.jpg 500w,
-      ./images/default-cat-large.jpg 1000w, alt="The default background image of
-      a tabby cat that is looking at you with a neutral face." />
+    <section
+      id="primary-image-section"
+      role="img"
+      aria-label="The main search result containing a single image and it's alt description"
+    >
+      <div id="main-image-container">
+        <img
+          srcset="
+            ./images/default-cat-small.jpg  500w,
+            ./images/default-cat-large.jpg 1000w
+          "
+          alt="The default background image
+      of a tabby cat that is looking at you with a neutral face."
+        />
+      </div>
+      <div id="alt-text-container" role="status">
+        Hello this is the initial state text. Hopefully you won't see it.
+      </div>
     </section>
     <section id="results-container">
-      <button id="nav-left"><span>&#60;</span></button>
+      <button
+        id="nav-left"
+        role="button"
+        aria-label="Return to the last page of search results"
+      >
+        <span>&#60;</span>
+      </button>
       <div id="gallery-container">
         <div id="thumb-container"></div>
       </div>
-      <button id="nav-right"><span>&#62;</span></button>
+      <button
+        id="nav-right"
+        role="button"
+        aria-label="Get the next page of search results"
+      >
+        <span>&#62;</span>
+      </button>
     </section>
     <footer>Howe Creative &copy 2024</footer>
   </body>
